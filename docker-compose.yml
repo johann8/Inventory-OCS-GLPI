@@ -1,0 +1,170 @@
+version: "3.3"
+networks:
+  inventoryNet_frontend:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: ${SUBNET_FRONTEND}.0/24
+  inventoryNet_backend:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    internal: true
+    ipam:
+      driver: default
+      config:
+      - subnet: ${SUBNET_BACKEND}.0/24
+
+services:
+#
+### === OCS Inventory Web APP ===
+#
+  ocsapp:
+    image: johann8/alpine-ocs:${VERSION_OCS}
+    container_name : ocsapp
+    restart: always
+    #ports:                                # commented, if traefik is used
+      #- ${PORT_OCS_EXT}:80                # commented, if traefik is used
+    volumes:
+      - "${DOCKERDIR}/data/ocsinventory/perlcomdata:/etc/ocsinventory-server"
+      - "${DOCKERDIR}/data/ocsinventory/ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
+      - "${DOCKERDIR}/data/ocsinventory/varlibdata:/var/lib/ocsinventory-reports"
+      - "${DOCKERDIR}/data/ocsinventory/httpdconfdata:/etc/apache2/conf.d"
+    environment:
+      TZ: ${TZ}
+      OCS_INVENTOTRY_INSTALL: true         # should be 'true' if Ocsinventory does not install. After installation please set to 'false'
+      OCS_DB_SERVER: ${OCS_DB_SERVER}
+      OCS_DB_USER: ${OCS_DB_USER}
+      OCS_DB_PASS: ${OCS_DB_PASS}
+      OCS_DB_NAME: ${OCS_DB_NAME}
+      # See documentation to set up SSL for MySQL
+      OCS_SSL_ENABLED: 0
+      OCS_DISABLE_API_MODE: 0              # comment this var, if api should be activated
+    depends_on:
+      - mariadb
+    hostname: ${HOSTNAME_INVENTORY}.${DOMAINNAME}
+    networks:
+      - inventoryNet_frontend
+      - inventoryNet_backend
+
+#
+### === OCS Inventory Nginx Proxy ===
+#
+  ocsproxy:
+    image: nginx
+    container_name: ocsproxy
+    restart: always
+    ports:
+      - "4443:443"
+    volumes:
+      - ${DOCKERDIR}/data/nginx/config:/etc/nginx/templates
+      - ${DOCKERDIR}/data/nginx/certs:/etc/nginx/certs
+      - ${DOCKERDIR}/data/nginx/auth:/etc/nginx/auth
+    environment:
+      # 80 or 443
+      LISTEN_PORT: 443
+      # empty or ssl
+      PORT_TYPE: "ssl"
+      SSL_CERT: ocs.crt
+      SSL_KEY: ocs.key
+      # OCS Api user restriction (default ocsapi/ocapi)
+      API_AUTH_FILE: ocsapi.htpasswd
+      # OCS Download
+      READ_TIMEOUT: 300
+      CONNECT_TIMEOUT: 300
+      SEND_TIMEOUT: 300
+      MAX_BODY_SIZE: 1G
+    depends_on:
+      - ocsapp
+    networks:
+      - inventoryNet_frontend
+
+#
+### === GLPI Web APP ===
+#
+  glpi:
+    image: johann8/alpine-glpi:${VERSION}
+    container_name: glpi
+    hostname: glpi
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    volumes:
+      - ${DOCKERDIR}/data/glpi/files:/var/www/glpi/files/:rw
+      - ${DOCKERDIR}/data/glpi/plugins:/var/www/glpi/plugins/:rw
+      - ${DOCKERDIR}/data/glpi/config:/var/www/glpi/config/:rw
+      # For crontab: comment out what you need
+      #- ${DOCKERDIR}/data/crond/5min:/etc/periodic/5min/
+      #- ${DOCKERDIR}/data/crond/15min:/etc/periodic/15min/
+      #- ${DOCKERDIR}/data/crond/30min:/etc/periodic/30min/
+      #- ${DOCKERDIR}/data/crond/hourly:/etc/periodic/hourly/
+      - ${DOCKERDIR}/data/crond/daily:/etc/periodic/daily/
+      - ${DOCKERDIR}/data/crond/weekly:/etc/periodic/weekly/
+      - ${DOCKERDIR}/data/crond/monthly:/etc/periodic/monthly/
+      - ${DOCKERDIR}/data/crontabs:/etc/crontabs/
+    environment:
+      GLPI_LANG: ${GLPI_LANG}
+      TZ: ${TZ}
+      MARIADB_HOST: ${MARIADB_GLPI_HOST}
+      MARIADB_PORT: ${MARIADB_GLPI_PORT}
+      MARIADB_DATABASE: ${MARIADB_GLPI_DATABASE}
+      MARIADB_USER: ${MARIADB_GLPI_USER}
+      MARIADB_PASSWORD: ${MARIADB_GLPI_PASSWORD}
+    #ports:                                 # commented, if traefik is used
+    #  - ${PORT_GLPI_EXT}:8080              # commented, if traefik is used
+    networks:
+      - inventoryNet_frontend
+      - inventoryNet_backend
+
+#
+### === MEMCACHED ===
+#
+  memcached:
+    image: memcached:alpine3.17
+    container_name: memcached
+    restart: always
+    depends_on:
+      - glpi
+    environment:
+      - TZ=${TZ}
+    command: ["-m", "128"]
+    networks:
+      - inventoryNet_frontend
+
+#
+### === MariaDB Database ===
+#
+  mariadb:
+    image: mariadb:${VERSION_DB}
+    container_name: mariadb
+    stop_grace_period: 45s
+    restart: unless-stopped
+    # remove comment after install 
+    healthcheck:
+      test: "mysqladmin ping -h localhost -u$${OCS_DB_USER} --password=$${OCS_DB_PASS}"
+      interval: 45s
+      timeout: 10s
+      retries: 5
+    restart: always
+    volumes:
+      - "${DOCKERDIR}/data/mariadb/dbdata:/var/lib/mysql:rw"
+      - "${DOCKERDIR}/data/mariadb/config:/etc/mysql/conf.d:ro"
+      #- "${DOCKERDIR}/data/mariadb/sql:/docker-entrypoint-initdb.d"
+      #- "${DOCKERDIR}/data/mariadb/socket:/var/run/mysqld"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      # OCS Inventory Database - created automatically
+      MARIADB_DATABASE:      ${OCS_DB_NAME}
+      MARIADB_USER:          ${OCS_DB_USER}
+      MARIADB_PASSWORD:      ${OCS_DB_PASS}
+      # GLPI Database - must be created manually (see below)
+      MARIADB_GLPI_DATABASE: ${MARIADB_GLPI_DATABASE}
+      MARIADB_GLPI_USER: ${MARIADB_GLPI_USER}
+      MARIADB_GLPI_PASSWORD: ${MARIADB_GLPI_PASSWORD}
+    ports:
+      - "3306:3306"
+    networks:
+      - inventoryNet_backend

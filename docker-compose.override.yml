@@ -1,0 +1,40 @@
+version: "3.3"
+services:
+
+  ocsapp:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.ocs-secure.entrypoints=websecure"
+      - "traefik.http.routers.ocs-secure.middlewares=default-chain@file,rate-limit@file"
+      - "traefik.http.routers.ocs-secure.rule=Host(`${HOSTNAME_OCS}.${DOMAINNAME}`)"
+      - "traefik.http.routers.ocs-secure.service=ocs"
+      #- "traefik.http.routers.ocs-secure.tls.certresolver=produktion"             # für eigene Zertifikate
+      - "traefik.http.routers.ocs-secure.tls.options=modern@file"
+      - "traefik.http.routers.ocs-secure.tls=true"
+      - "traefik.http.services.ocs.loadbalancer.sticky.cookie.httpOnly=true"
+      - "traefik.http.services.ocs.loadbalancer.sticky.cookie.secure=true"
+      - "traefik.http.services.ocs.loadbalancer.server.port=${PORT_OCS}"
+    networks:
+      - proxy
+
+  glpi:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.glpi-secure.entrypoints=websecure"
+      - "traefik.http.routers.glpi-secure.middlewares=default-chain@file,rate-limit@file"
+      - "traefik.http.routers.glpi-secure.rule=Host(`${HOSTNAME_GLPI}.${DOMAINNAME}`)"
+      - "traefik.http.routers.glpi-secure.service=glpi"
+      #- "traefik.http.routers.glpi-secure.tls.certresolver=produktion"             # für eigene Zertifikate
+      - "traefik.http.routers.glpi-secure.tls.options=modern@file"
+      - "traefik.http.routers.glpi-secure.tls=true"
+      - "traefik.http.services.glpi.loadbalancer.sticky.cookie.httpOnly=true"
+      - "traefik.http.services.glpi.loadbalancer.sticky.cookie.secure=true"
+      - "traefik.http.services.glpi.loadbalancer.server.port=${PORT_GLPI}"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
