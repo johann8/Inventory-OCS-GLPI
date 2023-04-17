@@ -29,7 +29,10 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
 </p>
 
 - [Install OCS Inventory](#install-ocs-inventory)
+  - [OCS Inventory setup](#ocs-inventory-setup)
 - [Install GLPI](#install-glpi)
+  - [GLPI setup](#glpi-setup)
+
 
 ## Install GLPI plus OCS Inventory docker container
 - create folders
@@ -121,6 +124,7 @@ exit
 ```
 ### Install OCS Inventory
 - Go to http://ocs.changeme.de/ocsreports/
+- Run through the installation wizard and log in with admin / admin
 
 ### Install GLPI
 - Go to http://glpi.changme.de
@@ -130,5 +134,11 @@ exit
 ![Choose Database](https://raw.githubusercontent.com/johann8/alpine-glpi/master/docs/assets/screenshots/GLPI_Setup_02.PNG)
 
 - Run through the installation wizard and log in with glpi / glpi
+
+### GLPI setup
+- Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
+
+### OCS Inventory setup
+- Setup of `OCS Inventory` can be found [here](https://github.com/johann8/ocs-alpine)
 
 Enjoy!
