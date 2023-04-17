@@ -135,10 +135,10 @@ exit
 
 - Run through the installation wizard and log in with glpi / glpi
 
-### GLPI setup
-- Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
-
 ### OCS Inventory setup
 - Setup of `OCS Inventory` can be found [here](https://github.com/johann8/ocs-alpine)
+
+### GLPI setup
+- Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
 
 Enjoy!
