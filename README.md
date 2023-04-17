@@ -8,7 +8,7 @@ Image is based on [Alpine 3.17](https://hub.docker.com/repository/docker/johann8
 ## OCS Inventoryi NG Docker Image 
 Image is based on [Alpine 3.17](https://hub.docker.com/repository/docker/johann8/alpine-ocs/general)
 
-| pull | size alpine | version | platform |
+| pull | size | version | platform |
 |:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|
 | ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-ocs?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-ocs/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-ocs?sort=date)](https://hub.docker.com/r/johann8/alpine-ocs/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") |
 
