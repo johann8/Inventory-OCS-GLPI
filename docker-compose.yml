@@ -12,7 +12,7 @@ networks:
     driver: bridge
     driver_opts:
       com.docker.network.enable_ipv6: "false"
-    internal: true
+    internal: true                            # set to "false" to expose ports
     ipam:
       driver: default
       config:
