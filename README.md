@@ -129,9 +129,9 @@ exit
 ### Install GLPI
 - Go to http://glpi.changme.de
 - Enter the database connection details as shown in the picture
-![Connect to Database](https://raw.githubusercontent.com/johann8/alpine-glpi/master/docs/assets/screenshots/GLPI_Setup_01.PNG)
+![Connect to Database](https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docs/assets/screenshots/GLPI_Database_Setup_1.PNG)
 - Choose the database glpi
-![Choose Database](https://raw.githubusercontent.com/johann8/alpine-glpi/master/docs/assets/screenshots/GLPI_Setup_02.PNG)
+![Choose Database](https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docs/assets/screenshots/GLPI_Database_Setup_2.PNG)
 
 - Run through the installation wizard and log in with `glpi / glpi`
 
@@ -140,5 +140,24 @@ exit
 
 ### GLPI setup
 - Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
+
+:warning: Please do not forget to change `docker-compose.yml` after installation as follows
+```bash
+# change docker-compose.yml - will delete install.php
+DOCKERDIR=/opt/inventory
+cd ${DOCKERDIR}
+vim docker-compose.yml
+----------------------
+from
+...
+OCS_INVENTOTRY_INSTALL: true
+...
+
+to
+...
+OCS_INVENTOTRY_INSTALL: false
+...
+----------------------
+```
 
 Enjoy!
