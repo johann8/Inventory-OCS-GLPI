@@ -45,11 +45,12 @@ tree -d -L 3 ${DOCKERDIR}
 - Download config files
 
 ```bash
-DOCKERDIR=//opt/inventory
+DOCKERDIR=/opt/inventory
 cd ${DOCKERDIR}
-wget https://raw.githubusercontent.com/johann8/alpine-glpi/master/docker-compose.yml
-wget https://raw.githubusercontent.com/johann8/alpine-glpi/master/docker-compose.override.yml
-wget https://raw.githubusercontent.com/johann8/alpine-glpi/master/.env
+wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docker-compose.yml
+wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docker-compose.override.yml
+wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/.env
+wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/assets/mariadb/config/my.cnf -P data/mariadb/config/
 ```
 
 - Customize variable in .env file
@@ -88,7 +89,7 @@ cp /etc/pki/tls/certs/cacert.pem ${DOCKERDIR}/
 - Run all docker container
 
 ```bash
-DOCKERDIR=/opt/glpi
+DOCKERDIR=/opt/inventory
 cd ${DOCKERDIR}
 docker-compose up -d
 
