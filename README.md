@@ -120,10 +120,10 @@ mysql --batch --user=root --password=${MARIADB_ROOT_PASSWORD} -e "select Host,Us
 exit
 ```
 ### Install OCS Inventory
-- Go to http://ocs.int.brg-recht.de/ocsreports/
+- Go to http://ocs.changeme.de/ocsreports/
 
 ### Install GLPI
-- Go to http://glpi.mydomain.de
+- Go to http://glpi.changme.de
 - Enter the database connection details as shown in the picture
 ![Connect to Database](https://raw.githubusercontent.com/johann8/alpine-glpi/master/docs/assets/screenshots/GLPI_Setup_01.PNG)
 - Choose the database glpi
