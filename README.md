@@ -124,7 +124,7 @@ exit
 ```
 ### Install OCS Inventory
 - Go to http://ocs.changeme.de/ocsreports/
-- Run through the installation wizard and log in with admin / admin
+- Run through the installation wizard and log in with `admin / admin`
 
 ### Install GLPI
 - Go to http://glpi.changme.de
@@ -133,7 +133,7 @@ exit
 - Choose the database glpi
 ![Choose Database](https://raw.githubusercontent.com/johann8/alpine-glpi/master/docs/assets/screenshots/GLPI_Setup_02.PNG)
 
-- Run through the installation wizard and log in with glpi / glpi
+- Run through the installation wizard and log in with `glpi / glpi`
 
 ### OCS Inventory setup
 - Setup of `OCS Inventory` can be found [here](https://github.com/johann8/ocs-alpine)
