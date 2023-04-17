@@ -51,18 +51,18 @@ services:
       - inventoryNet_backend
 
 #
-### === OCS Inventory Nginx Proxy ===
+### === OCS Inventory Nginx Proxy ===      # Only for client inventory
 #
-  ocsproxy:
+  ocsproxy:                            
     image: nginx
     container_name: ocsproxy
     restart: unless-stopped
     ports:
       - "4443:443"
     volumes:
-      - ${DOCKERDIR}/data/nginx/config:/etc/nginx/templates
+#      - ${DOCKERDIR}/data/nginx/config:/etc/nginx/templates
       - ${DOCKERDIR}/data/nginx/certs:/etc/nginx/certs
-      - ${DOCKERDIR}/data/nginx/auth:/etc/nginx/auth
+#      - ${DOCKERDIR}/data/nginx/auth:/etc/nginx/auth
     environment:
       # 80 or 443
       LISTEN_PORT: 443
@@ -71,7 +71,7 @@ services:
       SSL_CERT: ocs.crt
       SSL_KEY: ocs.key
       # OCS Api user restriction (default ocsapi/ocapi)
-      API_AUTH_FILE: ocsapi.htpasswd
+#      API_AUTH_FILE: ocsapi.htpasswd
       # OCS Download
       READ_TIMEOUT: 300
       CONNECT_TIMEOUT: 300
