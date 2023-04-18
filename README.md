@@ -147,7 +147,6 @@ exit
 - Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
 
 </br>
-</br>
 
 ---
 
