@@ -54,7 +54,7 @@ services:
 ### === OCS Inventory Nginx Proxy ===      # Only for client inventory
 #
   ocsproxy:                            
-    image: nginx
+    image: nginx:stable-alpine3.17
     container_name: ocsproxy
     restart: unless-stopped
     ports:
