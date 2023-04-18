@@ -32,7 +32,7 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
   - [OCS Inventory setup](#ocs-inventory-setup)
 - [Install GLPI](#install-glpi)
   - [GLPI setup](#glpi-setup)
-
+- [Database backup](#database-backup)
 
 ## Install GLPI plus OCS Inventory docker container
 - create folders
@@ -160,5 +160,6 @@ OCS_INVENTOTRY_INSTALL: false
 ...
 ----------------------
 ```
+## Database backup
 
 Enjoy!
