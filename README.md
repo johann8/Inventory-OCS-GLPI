@@ -157,7 +157,7 @@ DOCKERDIR=/opt/inventory
 cd ${DOCKERDIR}
 vim docker-compose.yml
 ----------------------
-from
+change from
 ...
 OCS_INVENTOTRY_INSTALL: true
 ...
