@@ -31,13 +31,14 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
 
 <h1 align="center">Installation and Configuration</h1>
 
+- [Install GLPI and OCS Inventory docker container](#install-glpi-and-ocs-Inventory-docker-container)
 - [Install OCS Inventory](#install-ocs-inventory)
-  - [OCS Inventory setup](#ocs-inventory-setup)
+  - [OCS Inventory configuration](#ocs-inventory-setup)
 - [Install GLPI](#install-glpi)
-  - [GLPI setup](#glpi-setup)
+  - [GLPI configuration](#glpi-setup)
 - [Database backup](#database-backup)
 
-## Install GLPI plus OCS Inventory docker container
+## Install GLPI and OCS Inventory docker container
 - create folders
 
 ```bash
