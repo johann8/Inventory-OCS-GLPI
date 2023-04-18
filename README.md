@@ -37,6 +37,7 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
 - [Install GLPI](#install-glpi)
   - [GLPI configuration](#glpi-setup)
 - [Database backup](#database-backup)
+- [Database restore](#database-restore)
 
 ## Install GLPI and OCS Inventory docker container
 - create folders
@@ -169,5 +170,49 @@ OCS_INVENTOTRY_INSTALL: false
 ----------------------
 ```
 ## Database backup
+
+You can backup the database with this <a href="https://github.com/johann8/tools/tree/master/mariadb">script</a>.
+
+- Download bash script
+```bash
+wget https://raw.githubusercontent.com/johann8/tools/master/mariadb/mysqldump_docker_backup_schema.sh -P /usr/local/bin/
+chmod 0700 /usr/local/bin/mysqldump_docker_backup_schema.sh
+```
+
+- Customize variable
+```bash
+vim /usr/local/bin/mysqldump_docker_backup_schema.sh
+```
+
+- Install crontab
+```bash
+crontab -e
+# Backup mariadb with mysqldump
+05  4  *  *  *  /usr/local/bin/mysqldump_docker_backup_full.sh > /dev/null 2>&1
+15  4  *  *  *  /usr/local/bin/mysqldump_docker_backup_schema.sh > /dev/null 2>&1
+```
+
+- Create logrotate file
+```bash
+cat > bacula-dir_template.conf << 'EOL'
+/var/log/mysqldump_docker_backup_full.log /var/log/mysqldump_docker_backup_schema.log {
+    weekly
+    missingok
+    rotate 4
+    compress
+}
+EOL
+```
+
+## Database restore
+
+- Recovery database
+```bash
+# Example for docker container name `mariadb`
+mkdir /tmp/recovery
+tar -xvzf /var/backup/centos7/mysqldump_docker_backup_schema/kimai-mysqldump_backup_20210908_211509.sql.tar.gz -C /tmp/recovery
+docker exec -i mariadb sh -c 'exec mysql -uroot -p"$MARIADB_ROOT_PASSWORD"' < /tmp/recovery/kimai-mysqldump_backup_20210908_211509.sql
+```
+
 
 Enjoy!
