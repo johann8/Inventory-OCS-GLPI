@@ -146,6 +146,9 @@ exit
 ### GLPI setup
 - Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
 
+</br>
+</br>
+
 > :warning: Please do not forget to change `docker-compose.yml` after installation as follows
 ```bash
 # change docker-compose.yml - will delete install.php
