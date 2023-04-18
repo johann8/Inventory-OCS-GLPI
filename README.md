@@ -62,6 +62,7 @@ wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docker-
 wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/docker-compose.override.yml
 wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/.env
 wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/assets/mariadb/config/my.cnf -P data/mariadb/config/
+wget https://raw.githubusercontent.com/johann8/Inventory-OCS-GLPI/master/assets/nginx/config/ocsinventory.conf.template -p data/nginx/config
 ```
 
 - Customize variable in .env file
