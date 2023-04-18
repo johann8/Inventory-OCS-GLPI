@@ -28,6 +28,9 @@ Since 2001, OCS Inventory NG has been looking for making software and hardware m
 OCS Inventory NG asks its agents to know the software and hardware composition of every computer or server.
 </p>
 
+
+<h1 align="center">Installation and Configuration</h1>
+
 - [Install OCS Inventory](#install-ocs-inventory)
   - [OCS Inventory setup](#ocs-inventory-setup)
 - [Install GLPI](#install-glpi)
