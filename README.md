@@ -176,7 +176,9 @@ You can backup the database with this <a href="https://github.com/johann8/tools/
 - Download bash script
 ```bash
 wget https://raw.githubusercontent.com/johann8/tools/master/mariadb/mysqldump_docker_backup_schema.sh -P /usr/local/bin/
+wget https://raw.githubusercontent.com/johann8/tools/master/mariadb/mysqldump_docker_backup_full.sh -P /usr/local/bin/
 chmod 0700 /usr/local/bin/mysqldump_docker_backup_schema.sh
+chmod 0700 /usr/local/bin/mysqldump_docker_backup_full.sh
 ```
 
 - Customize variable
@@ -187,6 +189,7 @@ vim /usr/local/bin/mysqldump_docker_backup_schema.sh
 - Install crontab
 ```bash
 crontab -e
+
 # Backup mariadb with mysqldump
 05  4  *  *  *  /usr/local/bin/mysqldump_docker_backup_full.sh > /dev/null 2>&1
 15  4  *  *  *  /usr/local/bin/mysqldump_docker_backup_schema.sh > /dev/null 2>&1
