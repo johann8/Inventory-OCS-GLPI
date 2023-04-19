@@ -194,7 +194,7 @@ crontab -e
 
 - Create logrotate file
 ```bash
-cat > bacula-dir_template.conf << 'EOL'
+cat > /etc/logrotate.d/mysqldump_docker_backup << 'EOL'
 /var/log/mysqldump_docker_backup_full.log /var/log/mysqldump_docker_backup_schema.log {
     weekly
     missingok
