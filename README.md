@@ -251,7 +251,7 @@ sed -i -e 's/inet_protocols = all/inet_protocols = ipv4/' /etc/postfix/main.cf
 sed -i -e '/inet_protocols = ipv4/a\mynetworks = 127.0.0.0/8 172.16.0.0/16' /etc/postfix/main.cf
 
 
-# Add on line 337 into main.cf after relayhosti - customize smtp.changeme.de 
+# Add on line 337 into main.cf after relayhost - customize smtp.changeme.de 
 vim /etc/postfix/main.cf
 ---
 # ------------ Relayhost ------------
