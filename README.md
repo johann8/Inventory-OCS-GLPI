@@ -1,11 +1,11 @@
-## GLPI Docker Image
+## GLPI Docker Image 🐋
 Image is based on [Alpine 3.17](https://hub.docker.com/repository/docker/johann8/alpine-glpi/general)
 
 | pull | size | version | platform |
 |:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|
 | ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-glpi?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-glpi/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-glpi?sort=date)](https://hub.docker.com/r/johann8/alpine-glpi/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") |
 
-## OCS Inventoryi NG Docker Image 
+## OCS Inventoryi NG Docker Image 🐋
 Image is based on [Alpine 3.17](https://hub.docker.com/repository/docker/johann8/alpine-ocs/general)
 
 | pull | size | version | platform |
@@ -308,6 +308,5 @@ egrep -v '(^.*#|^$)' /etc/postfix/main.cf
 ```bash
 ${_HOST}.@${_DOMAIN}.de -> helpdesk@changeme.de
 ```
-
 
 Enjoy!
