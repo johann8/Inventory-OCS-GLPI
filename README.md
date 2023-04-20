@@ -38,6 +38,7 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
   - [GLPI configuration](#glpi-setup)
 - [Database backup](#database-backup)
 - [Database restore](#database-restore)
+- [SMTP setup on docker host](#smtp-setup-on-docker-host)
 
 ## Install GLPI and OCS Inventory docker container
 - create folders
@@ -215,6 +216,95 @@ EOL
 mkdir /tmp/recovery
 tar -xvzf /var/backup/centos7/mysqldump_docker_backup_schema/kimai-mysqldump_backup_20210908_211509.sql.tar.gz -C /tmp/recovery
 docker exec -i mariadb sh -c 'exec mysql -uroot -p"$MARIADB_ROOT_PASSWORD"' < /tmp/recovery/kimai-mysqldump_backup_20210908_211509.sql
+```
+
+## SMTP setup on docker host
+To send mails `SMTP Server` is installed and configured on Docker host. This tutorial is suitable for `CentOS/Rocky/Oracle`.
+
+- Install Postfix
+```bash
+# install postfix
+dnf install postfix -y
+
+# for sasl auth
+dnf install -y cyrus-sasl cyrus-sasl-gssapi cyrus-sasl-plain
+```
+- Configure Postfix
+```bash
+# set variables
+_DOMAIN=$(echo $(hostname) | cut -d"." -f2,3,4)
+_HOST=$(echo $(hostname) | cut -d"." -f1)
+_SMTP_SERVER=smtp.changeme.de
+
+# create backup 
+cp /etc/postfix/main.cf /etc/postfix/main.cf_orig
+
+# configure main.cf
+sed -i -e '/#myhostname = host/c\myhostname = '${_HOST}'.'${_DOMAIN}'' /etc/postfix/main.cf 
+sed -i -e '/#mydomain = domain/c\mydomain = '${_DOMAIN}'' /etc/postfix/main.cf
+sed -i -e 's/#myorigin = $mydomain/myorigin = $mydomain/' /etc/postfix/main.cf 
+sed -i -e 's/#inet_interfaces = all/inet_interfaces = all/' /etc/postfix/main.cf
+sed -i -e 's/#inet_protocols = ipv4/inet_protocols = ipv4/' /etc/postfix/main.cf 
+sed -i -e '/inet_interfaces = localhost/c\inet_interfaces = \$myhostname, localhost' /etc/postfix/main.cf
+sed -i -e 's/inet_interfaces = all/#inet_interfaces = all/' /etc/postfix/main.cf 
+sed -i -e 's/inet_protocols = all/inet_protocols = ipv4/' /etc/postfix/main.cf
+sed -i -e '/inet_protocols = ipv4/a\mynetworks = 127.0.0.0/8 172.26.1.0/24' /etc/postfix/main.cf
+
+
+# Add on line 337 into main.cf after relayhost
+vim /etc/postfix/main.cf
+---
+# ------------ Relayhost ------------
+relayhost = [smtp.changeme.de]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
+smtpd_sasl_path = smtpd
+smtp_sasl_type = cyrus
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+
+# ------------ Generic maps ------------
+smtp_generic_maps = hash:/etc/postfix/generic
+---
+
+# create /etc/postfix/sasl_passwd file 
+echo "[smtp.changeme.de]:587    helpdesk@changeme.de:MySuperPassword" > /etc/postfix/sasl_passwd
+chmod 600 /etc/postfix/sasl_passwd
+postmap /etc/postfix/sasl_passwd
+cat /etc/postfix/sasl_passwd
+
+# create generic maps (set domain of smtp server) - rewrite locale address
+echo "# rewrite email" >> /etc/postfix/generic
+echo "root@${_HOST}.${_DOMAIN} ${_HOST}@changeme.de" >> /etc/postfix/generic
+chmod 600 /etc/postfix/generic
+postmap /etc/postfix/generic
+cat /etc/postfix/generic
+
+# create alias for root
+vim /etc/aliases
+---
+root:           admin@changeme.de
+---
+
+newaliases
+```
+- Run postfix
+```bash
+systemctl enable postfix --now
+systemctl status postfix
+
+# show running services
+netstat -tulpen
+
+# show logs
+tail -f -n 2000 /var/log/maillog
+
+# show postfix config
+egrep -v '(^.*#|^$)' /etc/postfix/main.cf
+```
+- Create alias on smtp server `smtp.changeme.de`
+```bash
+${_HOST}.@${_DOMAIN}.de -> helpdesk@changeme.de
 ```
 
 
