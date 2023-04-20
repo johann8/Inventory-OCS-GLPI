@@ -248,10 +248,10 @@ sed -i -e 's/#inet_protocols = ipv4/inet_protocols = ipv4/' /etc/postfix/main.cf
 sed -i -e '/inet_interfaces = localhost/c\inet_interfaces = \$myhostname, localhost' /etc/postfix/main.cf
 sed -i -e 's/inet_interfaces = all/#inet_interfaces = all/' /etc/postfix/main.cf 
 sed -i -e 's/inet_protocols = all/inet_protocols = ipv4/' /etc/postfix/main.cf
-sed -i -e '/inet_protocols = ipv4/a\mynetworks = 127.0.0.0/8 172.26.1.0/24' /etc/postfix/main.cf
+sed -i -e '/inet_protocols = ipv4/a\mynetworks = 127.0.0.0/8 172.16.0.0/16' /etc/postfix/main.cf
 
 
-# Add on line 337 into main.cf after relayhost
+# Add on line 337 into main.cf after relayhosti - customize smtp.changeme.de 
 vim /etc/postfix/main.cf
 ---
 # ------------ Relayhost ------------
@@ -267,20 +267,21 @@ smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_generic_maps = hash:/etc/postfix/generic
 ---
 
-# create /etc/postfix/sasl_passwd file 
+# create /etc/postfix/sasl_passwd file - customize "smtp.changeme.de", "helpdesk@changeme.de" and "MySuperPassword"
 echo "[smtp.changeme.de]:587    helpdesk@changeme.de:MySuperPassword" > /etc/postfix/sasl_passwd
 chmod 600 /etc/postfix/sasl_passwd
 postmap /etc/postfix/sasl_passwd
 cat /etc/postfix/sasl_passwd
 
-# create generic maps (set domain of smtp server) - rewrite locale address
+# create generic maps (set domain of smtp server) - rewrite locale mail address
+# customize "changeme.de"
 echo "# rewrite email" >> /etc/postfix/generic
 echo "root@${_HOST}.${_DOMAIN} ${_HOST}@changeme.de" >> /etc/postfix/generic
 chmod 600 /etc/postfix/generic
 postmap /etc/postfix/generic
 cat /etc/postfix/generic
 
-# create alias for root
+# create alias for root - customize "admin@changeme.de"
 vim /etc/aliases
 ---
 root:           admin@changeme.de
@@ -288,6 +289,7 @@ root:           admin@changeme.de
 
 newaliases
 ```
+
 - Run postfix
 ```bash
 systemctl enable postfix --now
@@ -302,7 +304,7 @@ tail -f -n 2000 /var/log/maillog
 # show postfix config
 egrep -v '(^.*#|^$)' /etc/postfix/main.cf
 ```
-- Create alias on smtp server `smtp.changeme.de`
+- Create alias on smtp server `smtp.changeme.de` - customize `helpdesk@changeme.de`
 ```bash
 ${_HOST}.@${_DOMAIN}.de -> helpdesk@changeme.de
 ```
