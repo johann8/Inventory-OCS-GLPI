@@ -170,7 +170,7 @@ OCS_INVENTOTRY_INSTALL: false
 ...
 ----------------------
 ```
-## Database backup
+## Database backup ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 You can backup the database with this <a href="https://github.com/johann8/tools/tree/master/mariadb">script</a>.
 
@@ -208,7 +208,7 @@ cat > /etc/logrotate.d/mysqldump_docker_backup << 'EOL'
 EOL
 ```
 
-## Database restore
+## Database restore ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
 
 - Recovery database
 ```bash
