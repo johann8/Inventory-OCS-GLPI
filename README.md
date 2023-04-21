@@ -242,14 +242,9 @@ cp /etc/postfix/main.cf /etc/postfix/main.cf_orig
 # configure main.cf
 sed -i -e '/#myhostname = host/c\myhostname = '${_HOST}'.'${_DOMAIN}'' /etc/postfix/main.cf 
 sed -i -e '/#mydomain = domain/c\mydomain = '${_DOMAIN}'' /etc/postfix/main.cf
-sed -i -e 's/#myorigin = $mydomain/myorigin = $mydomain/' /etc/postfix/main.cf 
-sed -i -e 's/#inet_interfaces = all/inet_interfaces = all/' /etc/postfix/main.cf
-sed -i -e 's/#inet_protocols = ipv4/inet_protocols = ipv4/' /etc/postfix/main.cf 
-sed -i -e '/inet_interfaces = localhost/c\inet_interfaces = \$myhostname, localhost' /etc/postfix/main.cf
-sed -i -e 's/inet_interfaces = all/#inet_interfaces = all/' /etc/postfix/main.cf 
+sed -i -e 's/#myorigin = $myhostname/myorigin = $myhostname/' /etc/postfix/main.cf 
 sed -i -e 's/inet_protocols = all/inet_protocols = ipv4/' /etc/postfix/main.cf
 sed -i -e '/inet_protocols = ipv4/a\mynetworks = 127.0.0.0/8 172.16.0.0/16' /etc/postfix/main.cf
-
 
 # Add on line 337 into main.cf after relayhost - customize smtp.changeme.de 
 vim /etc/postfix/main.cf
