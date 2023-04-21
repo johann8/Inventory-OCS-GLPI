@@ -303,5 +303,10 @@ egrep -v '(^.*#|^$)' /etc/postfix/main.cf
 ```bash
 ${_HOST}.@${_DOMAIN}.de -> helpdesk@changeme.de
 ```
+- Test SMTP server
+```bash
+echo "Test mail from postfix" | mail -s "Test Postfix" root
+echo "Test mail from postfix" | mail -s "Test Postfix" admin@changeme.de
+```
 
 Enjoy!
