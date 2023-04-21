@@ -36,8 +36,8 @@ OCS Inventory NG asks its agents to know the software and hardware composition o
   - [OCS Inventory configuration](#ocs-inventory-setup)
 - [Install GLPI](#install-glpi)
   - [GLPI configuration](#glpi-setup)
-- [Database backup](#database-backup-) ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
-- [Database restore](#database-restore-) ![MariaDB](https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white)
+- [Database backup](#database-backup-)
+- [Database restore](#database-restore-)
 - [SMTP setup on docker host](#smtp-setup-on-docker-host)
 
 ## Install GLPI and OCS Inventory docker container
