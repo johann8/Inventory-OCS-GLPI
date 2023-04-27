@@ -144,6 +144,7 @@ exit
 
 ### OCS Inventory setup
 - Setup of `OCS Inventory` can be found [here](https://github.com/johann8/ocs-alpine)
+- Configuration of `restapi` can be found [here](https://github.com/johann8/ocs-alpine#restapi)
 
 ### GLPI setup
 - Setup of `GLPI` can be found [here](https://github.com/johann8/alpine-glpi)
