@@ -1,16 +1,16 @@
 ## GLPI Docker Image 🐋
 Image is based on [Alpine 3.18](https://hub.docker.com/repository/docker/johann8/alpine-glpi/general)
 
-| pull | size | image | platform | alpine | bacularis |
-|:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:| :--------------------------------:|
-| ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-glpi?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-glpi/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-glpi?sort=date)](https://hub.docker.com/r/johann8/alpine-glpi/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") | [![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.18.0-blue.svg?style=flat-square)](https://alpinelinux.org/) | [![Bacularis Version](https://img.shields.io/badge/Bacularis%20version-1.5.0-orange.svg?style=flat-square)](https://bacularis.app/) |
+| pull | size | glpi image | platform | alpine |
+|:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:|
+| ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-glpi?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-glpi/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-glpi?sort=date)](https://hub.docker.com/r/johann8/alpine-glpi/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") | [![Alpine Version](https://img.shields.io/badge/Alpine%20version-v3.18.0-blue.svg?style=flat-square)](https://alpinelinux.org/) |
 
 ## OCS Inventoryi NG Docker Image 🐋
 Image is based on [Alpine 3.18](https://hub.docker.com/repository/docker/johann8/alpine-ocs/general)
 
-| pull | size | image | platform | ubuntu | bacularis |
-|:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:|
-| ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-ocs?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-ocs/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-ocs?sort=date)](https://hub.docker.com/r/johann8/alpine-ocs/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") | [![Ubuntu Version](https://img.shields.io/badge/Ubuntu%20version-22.04-blue.svg?style=flat-square)](https://ubuntu.com/) | [![Bacularis Version](https://img.shields.io/badge/Bacularis%20version-1.5.0-orange.svg?style=flat-square)](https://bacularis.app/) |
+| pull | size | ocs image | platform | ubuntu |
+|:---------------------------------:|:----------------------------------:|:--------------------------------:|:--------------------------------:|:--------------------------------:|
+| ![Docker Pulls](https://img.shields.io/docker/pulls/johann8/alpine-ocs?style=flat-square) | ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/johann8/alpine-ocs/latest) | [![](https://img.shields.io/docker/v/johann8/alpine-ocs?sort=date)](https://hub.docker.com/r/johann8/alpine-ocs/tags "Version badge") | ![](https://img.shields.io/badge/platform-amd64-blue "Platform badge") | [![Ubuntu Version](https://img.shields.io/badge/Ubuntu%20version-22.04-blue.svg?style=flat-square)](https://ubuntu.com/) |
 
 
 <h1 align="center">GLPI - IT Asset Management</h1>
