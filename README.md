@@ -186,6 +186,7 @@ chmod 0700 /usr/local/bin/mysqldump_docker_backup_full.sh
 - Customize variable
 ```bash
 vim /usr/local/bin/mysqldump_docker_backup_schema.sh
+vim /usr/local/bin/mysqldump_docker_backup_full.sh
 ```
 
 - Install crontab
